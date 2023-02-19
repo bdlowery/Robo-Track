@@ -6,28 +6,31 @@ import java.util.Random;
 
 public class EnergyStation extends FixedObject {
 	private int capacity;
-	private int energyScale = 3;
-	
+	private int energyScale = 2;
+
 	// capacity is proportional to its size,
-	
-	//random location
-	//random size
-	
+
+	// random location
+	// random size
+
 	public EnergyStation(int size, int x, int y) {
 		super(size, x, y, ColorUtil.BLACK);
 		this.capacity = super.getSize() * energyScale;
 	}
-	
+
 	public int getCapacity() {
 		return this.capacity;
 	}
 
-	
-	private static double randomXLocation() {
-		return 0;
+	public void depleteEnergy() {
+		this.setColor(ColorUtil.GRAY);
+		this.capacity = 0;
 	}
-	
-	private static double randomYLocation() {
-		return 0;
+
+	public String toString() {
+		String parentDesc = "\nEnergyStation: " + super.toString();
+		String myDesc = "capacity=" + getCapacity() + "\n";
+		return parentDesc + myDesc;
 	}
+
 }

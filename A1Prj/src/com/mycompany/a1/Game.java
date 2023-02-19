@@ -24,8 +24,7 @@ public class Game extends Form {
 	public void updateClock() {
 		this.clock++;
 	}
-	
-	
+
 	private void play() {
 		// code here to accept and
 		// execute user commands that
@@ -43,6 +42,7 @@ public class Game extends Form {
 
 		myTextField.addActionListener(new ActionListener() {
 			boolean quit = false;
+
 			public void actionPerformed(ActionEvent evt) {
 
 				String sCommand = myTextField.getText().toString();
@@ -50,16 +50,16 @@ public class Game extends Form {
 				if (sCommand.length() > 0) {
 					// add code to handle rest of the commands
 					switch (sCommand.charAt(0)) {
-					// increase speed of robot by small amount 
+					// increase speed of robot by small amount
 					case 'a':
-						ToastBar.showInfoMessage("Accelerate Robot +5");
-						System.out.println("Accelerate Robot +5");
+						ToastBar.showInfoMessage("Accelerate Robot");
+						System.out.println("Accelerate Robot");
 						gw.accelerate();
 						break;
-					// reduce speed of robot by small amount	
+					// reduce speed of robot by small amount
 					case 'b':
-						ToastBar.showInfoMessage("Slow Robot -5");
-						System.out.println("Slow Robot -5");
+						ToastBar.showInfoMessage("Slow Robot");
+						System.out.println("Slow Robot");
 						gw.brake();
 						break;
 					case 'l':
@@ -101,34 +101,39 @@ public class Game extends Form {
 						ToastBar.showInfoMessage("Robot collided with base 5");
 						System.out.println("Robot collided with base 5");
 						gw.collideBase(5);
+						break;
 					case '6':
 						ToastBar.showInfoMessage("Robot collided with base 6");
 						System.out.println("Robot collided with base 6");
 						gw.collideBase(6);
+						break;
 					case '7':
 						ToastBar.showInfoMessage("Robot collided with base 7");
 						System.out.println("Robot collided with base 7");
 						gw.collideBase(7);
+						break;
 					case '8':
 						ToastBar.showInfoMessage("Robot collided with base 8");
 						System.out.println("Robot collided with base 8");
 						gw.collideBase(8);
+						break;
 					case '9':
 						ToastBar.showInfoMessage("Robot collided with base 9");
 						System.out.println("Robot collided with base 9");
 						gw.collideBase(9);
-						
+						break;
+
 					case 'e':
 						ToastBar.showInfoMessage("Robot collided with Energy Station");
 						System.out.println("Robot collided with Energy Station");
 						gw.collideEnergyStation();
-						
+						break;
 					case 'g':
 						ToastBar.showInfoMessage("Robot collided with Drone");
 						System.out.println("Robot Collided with Drone");
 						gw.collideDrone();
-						break;			
-						
+						break;
+
 					case 't':
 						ToastBar.showInfoMessage("ticked");
 						System.out.println("ticked");
@@ -137,7 +142,7 @@ public class Game extends Form {
 					case 'd':
 						gw.display();
 						break;
-						
+
 					case 'm':
 						gw.map();
 						break;
@@ -145,7 +150,7 @@ public class Game extends Form {
 						quit = true;
 						break;
 					case 'y':
-						if(quit) {
+						if (quit) {
 							gw.exit();
 						}
 						break;
@@ -159,7 +164,7 @@ public class Game extends Form {
 						System.out.println("not a valid command");
 						myTextField.clear();
 						break;
-						
+
 					}
 				}
 			}
