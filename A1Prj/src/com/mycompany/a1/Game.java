@@ -52,91 +52,72 @@ public class Game extends Form {
 					switch (sCommand.charAt(0)) {
 					// increase speed of robot by small amount
 					case 'a':
-						ToastBar.showInfoMessage("Accelerate Robot");
-						System.out.println("Accelerate Robot");
+						System.out.println("\n*Accelerate Robot*");
 						gw.accelerate();
 						break;
 					// reduce speed of robot by small amount
 					case 'b':
-						ToastBar.showInfoMessage("Slow Robot");
-						System.out.println("Slow Robot");
+						System.out.println("\n*Slow Robot*");
 						gw.brake();
 						break;
 					case 'l':
-						ToastBar.showInfoMessage("Robot steers left -5");
-						System.out.println("Robot steers left -5");
+						System.out.println("\n*Robot steers left*");
 						gw.steer(-5);
 						break;
 					case 'r':
-						ToastBar.showInfoMessage("Robot steers right 5");
-						System.out.println("Robot steers right 5");
+						System.out.println("\n*Robot steers right*");
 						gw.steer(5);
 						break;
 					case 'c':
-						ToastBar.showInfoMessage("Robot collided with another robot");
-						System.out.println("Robot collided with another robot");
-						gw.collide();
+						System.out.println("\n*Robot collided with another robot*");
+						gw.collide("Robot");
 						break;
 					case '1':
-						ToastBar.showInfoMessage("Robot collided with base 1");
-						System.out.println("Robot collided with base 1");
+						System.out.println("\n*Robot collided with base 1*");
 						gw.collideBase(1);
 						break;
 					case '2':
-						ToastBar.showInfoMessage("Robot collided with base 2");
-						System.out.println("Robot collided with base 2");
+						System.out.println("\n*Robot collided with base 2*");
 						gw.collideBase(2);
 						break;
 					case '3':
-						ToastBar.showInfoMessage("Robot collided with base 3");
-						System.out.println("Robot collided with base 3");
+						System.out.println("\n*Robot collided with base 3*");
 						gw.collideBase(3);
 						break;
 					case '4':
-						ToastBar.showInfoMessage("Robot collided with base 4");
-						System.out.println("Robot collided with base 4");
+						System.out.println("\n*Robot collided with base 4*");
 						gw.collideBase(4);
 						break;
 					case '5':
-						ToastBar.showInfoMessage("Robot collided with base 5");
-						System.out.println("Robot collided with base 5");
+						System.out.println("\n*Robot collided with base 5*");
 						gw.collideBase(5);
 						break;
 					case '6':
-						ToastBar.showInfoMessage("Robot collided with base 6");
-						System.out.println("Robot collided with base 6");
+						System.out.println("\n*Robot collided with base 6*");
 						gw.collideBase(6);
 						break;
 					case '7':
-						ToastBar.showInfoMessage("Robot collided with base 7");
-						System.out.println("Robot collided with base 7");
+						System.out.println("\n*Robot collided with base 7*");
 						gw.collideBase(7);
 						break;
 					case '8':
-						ToastBar.showInfoMessage("Robot collided with base 8");
-						System.out.println("Robot collided with base 8");
+						System.out.println("\n*Robot collided with base 8*");
 						gw.collideBase(8);
 						break;
 					case '9':
-						ToastBar.showInfoMessage("Robot collided with base 9");
-						System.out.println("Robot collided with base 9");
+						System.out.println("\n*Robot collided with base 9*");
 						gw.collideBase(9);
 						break;
-
 					case 'e':
-						ToastBar.showInfoMessage("Robot collided with Energy Station");
-						System.out.println("Robot collided with Energy Station");
+						System.out.println("\n*Robot collided with Energy Station*");
 						gw.collideEnergyStation();
 						break;
 					case 'g':
-						ToastBar.showInfoMessage("Robot collided with Drone");
-						System.out.println("Robot Collided with Drone");
-						gw.collideDrone();
+						System.out.println("\n*Robot Collided with Drone*");
+						gw.collide("drone");
 						break;
-
 					case 't':
-						ToastBar.showInfoMessage("ticked");
-						System.out.println("ticked");
+						System.out.println("\n*Clock as ticked*");
 						gw.clockTick();
 						break;
 					case 'd':

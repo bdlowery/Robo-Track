@@ -8,14 +8,16 @@ public class Base extends FixedObject {
 	private int sequenceNumber;
 	private int color;
 
-	public Base(double x, double y, int sequenceNumber, int color) {
-		super(size, x, y, color);
+	public Base(double x, double y, int sequenceNumber, int alpha, int red, int green, int blue) {
+		super(size, x, y, alpha, red, green, blue);
 		this.sequenceNumber = sequenceNumber;
+
 	}
 
 	// color can't change for bases
 	@Override
-	public void setColor(int color) {
+	public void setColor(int alpha, int red, int green, int blue) {
+		System.out.println("cant change color of a base ");
 	}
 
 	public int getSequenceNumber() {

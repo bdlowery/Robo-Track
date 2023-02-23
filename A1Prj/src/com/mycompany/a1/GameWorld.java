@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import com.codename1.charts.util.ColorUtil;
 import java.util.Random;
 
+
+// TODO: Check clock tick functionality.
+
+
 public class GameWorld {
 	private int height;
 	private int width;
@@ -37,7 +41,7 @@ public class GameWorld {
 	}
 
 	private void spawnBase(double x, double y, int sequence) {
-		Base base = new Base(x, y, sequence, ColorUtil.YELLOW);
+		Base base = new Base(x, y, sequence, 100, 192, 192, 192);
 		gameObjects.add(base);
 	}
 
@@ -45,12 +49,12 @@ public class GameWorld {
 		int color = ColorUtil.BLUE;
 		int x = 0;
 		int y = 0;
-		Robot robot = new Robot(x, y, color);
+		Robot robot = new Robot(x, y, 100, 255, 0, 0);
 		gameObjects.add(robot);
 	}
 
+	// Spawn a drone with random attributes
 	private void spawnDrone() {
-		// int size, double x, double y, int color, int heading, int speed, Random rand
 		int s = rand.nextInt(this.maxSize - this.minSize) + minSize;
 		int x = rand.nextInt(this.width);
 		int y = rand.nextInt(this.height);
@@ -58,7 +62,9 @@ public class GameWorld {
 		int color = ColorUtil.LTGRAY;
 		// speed between 5 and 10
 		int speed = rand.nextInt(10 - 5) + 5;
-		Drone drone = new Drone(s, x, y, color, heading, speed);
+
+		Drone drone = new Drone(s, x, y, 100, 0, 0, 255, heading, speed);
+		gameObjects.add(drone);
 	}
 
 	public int getWidth() {
@@ -71,10 +77,8 @@ public class GameWorld {
 
 	// initialize all of the gameworld objects
 	public void init() {
-		// code here to create the
-		// initial game objects/setup
+
 		// create robot, drones, bases, and energy stations and add to gameObjects
-		// array.
 
 		// spawn 2 - 5 energy stations.
 		for (int i = 0; i < rand.nextInt(3) + 2; i++) {
@@ -86,7 +90,9 @@ public class GameWorld {
 		spawnBase(440, 600, 3);
 		spawnBase(740, 400, 4);
 		spawnBase(140, 300, 5);
-		spawnBase(500, 100, 6);
+		spawnBase(100, 100, 7);
+		spawnBase(500, 300, 8);
+		spawnBase(300, 50, 9);
 
 		// spawn 2 - 4 drones
 		for (int i = 0; i < rand.nextInt(2) + 2; i++) {
@@ -94,18 +100,15 @@ public class GameWorld {
 		}
 
 		spawnRobot();
-
+		
 	}
 
-	// additional methods here to
-	// manipulate world objects and
-	// related game state data
 
-	// increment the clock, and run move() function for all of the movable gameworld
-	// objects.
-	// change heading of robot and drone.
+
+	// increment the clock and run the discrete simulation
 	public void clockTick() {
 		clock++;
+		
 
 		// loop through game objects
 		for (GameObject singleObject : gameObjects) {
@@ -122,12 +125,23 @@ public class GameWorld {
 					System.out.println("Robot has died");
 					lives--;
 					((Robot) singleObject).respawnRobot();
-					init();
+					checkLives();
 				}
 			}
 		}
 	}
 
+	// Check how many lives the robot has left
+	public void checkLives() {
+		if(lives > 0) {
+			System.out.println("you have " + lives + " lives left");
+		} else {
+			System.out.println("Game over, you failed!");
+			System.exit(0);
+		}
+	}
+	
+	// accelerate the robot by a set ammount
 	public void accelerate() {
 		int accelAmmount = 5;
 		// loop through gameobjects array
@@ -137,12 +151,10 @@ public class GameWorld {
 			}
 		}
 	}
-	// check if the gameobject is a robot
-	// call the robots accelerate function passing in the amount to accelerate
-	// sysout the new speed of the robot.
 
+
+	// slow down the robot by a set amount
 	public void brake() {
-		// loop through gameobjects array
 		int brakeAmmount = 2;
 		for (GameObject singleObject : gameObjects) {
 			if (singleObject instanceof Robot) {
@@ -150,9 +162,8 @@ public class GameWorld {
 			}
 		}
 	}
-	// check if the gameobject is a robot
-	// sysout the new speed of the robot
 
+	// change the robots steering direction
 	public void steer(int direction) {
 		// loop through the gameobjects array
 		for (GameObject singleObject : gameObjects) {
@@ -160,45 +171,43 @@ public class GameWorld {
 				((Robot) singleObject).turn(direction);
 			}
 		}
-		// call the steering function from the robot class, passing in the direction.
-
-		// Steer function in robot class will handle what direction to turn the robot.
-
 	}
 
-	public void collide() {
-		// make a variable simulating a robots health. int fakeHealth = 20;.
-		int fakeDamage = 20;
-		// loop through the game objects.
+	// collide with a drone or a robot.
+	public void collide(String enemy) {
+		int fakeRobotDamage = 20;
+		int droneDamage = fakeRobotDamage / 2;
 		for (GameObject singleObject : gameObjects) {
 			if (singleObject instanceof Robot) {
-				((Robot) singleObject).damaged(fakeDamage);
+				if (enemy.equals("drone")) {
+					((Robot) singleObject).damaged(droneDamage);
+				} else {
+					((Robot) singleObject).damaged(fakeRobotDamage);
+				}
 			}
 		}
-
-		// if the game object is a Robot, call the damage function, passing in the
-		// fakeHealth amount.
 	}
 
+	
+	// collide with a base, and check if the correct base is being hit.
 	public void collideBase(int sequenceNumber) {
 		// loop through the game objects.
 		for (GameObject singleObject : gameObjects) {
 			if (singleObject instanceof Robot) {
 				if (sequenceNumber == ((Robot) singleObject).getLastBaseReached() + 1) {
-					System.out.println("last base reached was: " + ((Robot) singleObject).getLastBaseReached());
+
 					((Robot) singleObject).setLastBaseReached(sequenceNumber);
 					System.out.println("last base reached is now: " + ((Robot) singleObject).getLastBaseReached());
+					if (((Robot) singleObject).getLastBaseReached() == 9) {
+						System.out.println("Game over, you win! Total time: " + this.clock);
+						System.exit(0);
+					}
 				}
 			}
 		}
-		// check if the game object is a robot.
-		// if the sequence number is 1 more than the robots lastBaseReached
-		// (Robot.getLastBaseReached())
-		// call the function for updating the lastBaseReached (just ++ the lastBase by
-		// number by in the robot class)
-
 	}
 
+	// collide with an energy station and deplete the energy
 	public void collideEnergyStation() {
 		// loop through all of the game objects.
 		ArrayList<EnergyStation> energyStations = new ArrayList<EnergyStation>();
@@ -219,7 +228,7 @@ public class GameWorld {
 				((Robot) singleObject).charge(randomEnergyStation.getCapacity());
 				System.out.println("Robots energy charged to: " + ((Robot) singleObject).getEnergyLevel());
 
-				System.out.println("EnergyStations capacity was: " + randomEnergyStation.getCapacity());
+				System.out.println("\nEnergyStations capacity was: " + randomEnergyStation.getCapacity());
 				randomEnergyStation.depleteEnergy();
 				System.out.println("EnergyStation capacity depleted to: " + randomEnergyStation.getCapacity());
 			}
@@ -227,30 +236,6 @@ public class GameWorld {
 
 		spawnEnergyStation();
 
-	}
-
-	public void collideDrone() {
-		ArrayList<Drone> drones = new ArrayList<Drone>();
-		// loop through game objects
-		for (GameObject singleObject : gameObjects) {
-
-			if (singleObject instanceof Drone) {
-				drones.add((Drone) singleObject);
-			}
-		}
-		// pick a random drone to collide with the robot
-		Drone randomDrone = drones.get(rand.nextInt(drones.size()));
-
-		// loop through game objects
-		for (GameObject singleObject : gameObjects) {
-
-			if (singleObject instanceof Robot) {
-				((Robot) singleObject).damaged(10);
-			}
-		}
-		// if game object is a robot
-		// call the Robots applyDamage function, while passing in the drones damage
-		// value.
 	}
 
 	public void display() {

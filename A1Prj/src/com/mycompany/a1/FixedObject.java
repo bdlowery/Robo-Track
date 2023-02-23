@@ -1,9 +1,13 @@
 package com.mycompany.a1;
 
-public abstract class FixedObject extends GameObject {
+import com.codename1.charts.util.ColorUtil;
 
-	public FixedObject(int size, double x, double y, int color) {
-		super(size, x, y, color);
+public abstract class FixedObject extends GameObject {
+	private int color;
+
+	public FixedObject(int size, double x, double y, int alpha, int red, int green, int blue) {
+		super(size, x, y, alpha, red, green, blue);
+		this.color = ColorUtil.argb(alpha, red, green, blue);
 	}
 	
 	// set the x position of a fixed object
@@ -15,4 +19,8 @@ public abstract class FixedObject extends GameObject {
 	public void setY(double y) {
 		
 	}
+	
+//	public void setColor(int alpha, int red, int green, int blue) {
+//		this.color = ColorUtil.argb(alpha, red, green, blue);
+//	}
 }

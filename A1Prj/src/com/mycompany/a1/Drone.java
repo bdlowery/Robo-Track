@@ -4,11 +4,11 @@ import java.util.Random;
 
 public class Drone extends MovableObject implements ISteerable {
 
-	private Random rand;
+	private Random rand = new Random();
 
-	public Drone(int size, double x, double y, int color, int heading, int speed) {
-		super(size, x, y, color, heading, speed);
-//		this.rand = rand;
+	public Drone(int size, double x, double y, int alpha, int red, int green, int blue, int heading, int speed) {
+		super(size, x, y, alpha, red, green, blue, heading, speed);
+		
 
 	}
 
@@ -16,12 +16,40 @@ public class Drone extends MovableObject implements ISteerable {
 	public void turn(int angle) {
 		System.out.println("this object cannot turn");
 	}
+	
 
 	public void move() {
 		// range from -5 to positive 5;
-		this.heading += rand.nextInt(11) - 5;
+		this.setHeading(this.getHeading() + rand.nextInt(11) - 5);
+		
+		double x = this.getLocationX();
+		double y = this.getLocationY();
+		
 
-		// todo bounce off wall (center goes off screen) change heading to negative
-		super.move();
+		// convert the heading to radians
+		double rHeading = Math.toRadians(this.getHeading());
+
+		// find the change in x and change in y
+		double deltaX = this.getSpeed() * Math.cos(rHeading);
+		double deltaY = this.getSpeed() * Math.sin(rHeading);
+		
+
+		
+		if(deltaX + x > 1024 || deltaX + x < 0) {
+			this.setHeading(180);
+		} else {
+			this.setLocationX(deltaX + x);
+		}
+		
+		if(deltaY + y > 768 || deltaY + y < 0) {
+			this.setHeading(180);
+		} else {
+			this.setLocationY(deltaY + y);
+		}
+	}
+	
+	public String toString() {
+		String parentDesc = "\nDrone: " + super.toString() + "\n";
+		return parentDesc;
 	}
 }

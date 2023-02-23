@@ -14,16 +14,16 @@ public class EnergyStation extends FixedObject {
 	// random size
 
 	public EnergyStation(int size, int x, int y) {
-		super(size, x, y, ColorUtil.BLACK);
+		super(size, x, y, 100, 0, 255, 0);
 		this.capacity = super.getSize() * energyScale;
 	}
 
 	public int getCapacity() {
 		return this.capacity;
 	}
-
+	
 	public void depleteEnergy() {
-		this.setColor(ColorUtil.GRAY);
+		this.setColor(10, 45, 255, 63);
 		this.capacity = 0;
 	}
 
